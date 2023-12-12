@@ -1,13 +1,15 @@
-from main import build_dates, build_table
+from main import build_dates, build_table, get_TXST_holidays
 from docx import Document
 from datetime import datetime
 
 # test build_dates()
 
 calendar = build_dates(
-    datetime.strptime('01 01 01', "%m %d %y"),
-    datetime.strptime("03 01 01", "%m %d %y"),
-    "MWF"
+    datetime.strptime('01 01 24', "%m %d %y"),
+    datetime.strptime("05 01 24", "%m %d %y"),
+    "MWF",
+    get_TXST_holidays(datetime.strptime('01 01 24', "%m %d %y"),
+                      datetime.strptime("05 01 24", "%m %d %y"),)
 )
 print(calendar)
 
@@ -18,4 +20,8 @@ print(calendar)
 document = Document()
 table = document.add_table(rows=1, cols=7)
 build_table(table, calendar)
+document.save('test.docx')
 print(table)
+
+print(get_TXST_holidays(datetime.strptime("2024-01-01", "%Y-%m-%d"),
+                        datetime.strptime("2024-05-01", "%Y-%m-%d")))
