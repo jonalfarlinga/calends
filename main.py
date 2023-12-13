@@ -146,7 +146,7 @@ def get_TXST_holidays(start, end):
 
 # take a 7 column table and a class calendar,
 # fill in the table with the calendar info.
-def build_table(table, calendar):
+def build_table_2_col(table, calendar):
     # fill in the header row
     hdr_cells = table.rows[0].cells
     hdr_cells[0].text = hdr_cells[4].text = "Date"
@@ -172,15 +172,39 @@ def build_table(table, calendar):
         j += 1
 
 
-# ############
+# take a 3 column table and a class calendar,
+# fill in the table with the calendar info.
+def build_table(table, calendar):
+    # fill in the header row
+    hdr_cells = table.rows[0].cells
+    hdr_cells[0].text = "Date"
+    hdr_cells[1].text = "Topics"
+    hdr_cells[2].text = "Assignments"
+
+    # for each entry in half of list, append an entry each from
+    # first and last half, as a new row, to the table.
+    i = 0
+    while i < len(calendar['dates']):
+        row_cells = table.add_row().cells
+        row_cells[0].text = calendar['dates'][i]
+        row_cells[2].text = calendar['holidays'][i]
+        i += 1
+
+
+##############
 # MAIN TREE ##
-# ############
+##############
 if __name__ == "__main__":
+    print("\n#####################\n"
+          "# Welcome to Caends #\n"
+          "#      version 0.2  #\n"
+          "#####################\n\n")
     start, end, weekdays = get_input()  # get inputs
     holidays = get_TXST_holidays(start, end)  # get observed holidays
     class_dates = build_dates(start, end, weekdays, holidays)  # populate list
 
     document = docx.Document()  # init output doc
-    table = document.add_table(rows=1, cols=7)  # convert list to table
+    table = document.add_table(rows=1, cols=3)  # convert list to table
     build_table(table, class_dates)
     document.save("demo.docx")
+    print("Printed calendart to 'demo.docx'.\nGoodbye!\n")
