@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 from bs4 import BeautifulSoup as bs
 from json import load
+import subprocess
 TXST_CALENDAR = None
 OUT_PATH = None
 
@@ -79,6 +80,7 @@ def get_input():
     weekdays = None
     start = None
     end = None
+    format = None
 
     # ask until I recieve good data - Class days
     while not weekdays:
@@ -107,7 +109,16 @@ def get_input():
             print("Bad Date")
             start = None
 
-    return start, end, weekdays
+    while not format:
+        format = input("\nWhat format would you like to use?\n"
+                       "(press enter to accept no formatting)\n"
+                       "(type 1 to use Light Shading format)\n")
+    if format == "":
+        format = None
+    elif format == "1":
+        format = "Light Shading"
+
+    return start, end, weekdays, format
 
 
 # scrape TXST academic calendar for holidays between start and end
@@ -151,15 +162,24 @@ def get_TXST_holidays(start, end):
 
 # take a 3 column table and a class calendar,
 # fill in the table with the calendar info.
-def build_table(table, calendar):
+def build_table(table, calendar, format):
+    # styling the table
+    if format:
+        table.columns[0].width = docx.shared.Inches(1).emu
+        table.columns[1].width = docx.shared.Inches(2.5).emu
+        table.columns[2].width = docx.shared.Inches(2.5).emu
+        try:
+            table.style = format
+        except KeyError:
+            print(f"There is no '{format}' format. Using default format.")
+
     # fill in the header row
     hdr_cells = table.rows[0].cells
     hdr_cells[0].text = "Date"
     hdr_cells[1].text = "Topics"
     hdr_cells[2].text = "Assignments"
 
-    # for each entry in half of list, append an entry each from
-    # first and last half, as a new row, to the table.
+    # for each entry in the list, append an entry to the table
     i = 0
     while i < len(calendar['dates']):
         row_cells = table.add_row().cells
@@ -186,19 +206,32 @@ def load_config():
 # MAIN TREE ##
 ##############
 if __name__ == "__main__":
+    os.system('cls' if os.name == 'nt' else 'clear')
     load_config()
-    print("\n    ######################\n"
-          "    # Welcome to Calends #\n"
-          "    #      version 0.35  #\n"
-          "    ######################\n\n")
-    start, end, weekdays = get_input()  # get inputs
+    print("\n                   ######################\n"
+          "                   # Welcome to Calends #\n"
+          "                   #      version 0.9   #\n"
+          "                   ######################\n\n")
+
+    # get table data
+    start, end, weekdays, format = get_input()  # get inputs
     holidays = get_TXST_holidays(start, end)  # get observed holidays
     class_dates = build_dates(start, end, weekdays, holidays)  # populate list
 
+    # create .docx table
     document = docx.Document()  # init output doc
     table = document.add_table(rows=1, cols=3)  # convert list to table
-    build_table(table, class_dates)
+    table.autofit = False
+    build_table(table, class_dates, format)
+
+    # save document to file.
     file_name = 'calends-output.docx'
     filepath = os.path.join(OUT_PATH, file_name)
-    document.save(filepath)
-    print(f"\nPrinted calendar to {filepath}\nGoodbye!\n")
+    try:
+        document.save(filepath)
+
+        # open explorer to the new file and say goodbye
+        subprocess.Popen(fr'explorer /select,"{str(filepath)}')
+        print(f"\nPrinted calendar to {filepath}\nGoodbye!\n")
+    except PermissionError:
+        print("Failed to print to {filepath}")
