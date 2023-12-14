@@ -1,1 +1,1 @@
-python files\configure.py
+python files\configure.py && PAUSE

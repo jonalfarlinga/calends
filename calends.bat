@@ -1,1 +1,1 @@
-.\.venv\Scripts\activate.bat && python files\main.py
+.\.venv\Scripts\activate.bat && python files\main.py && PAUSE
