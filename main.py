@@ -1,8 +1,9 @@
-from keys import TXST_CALENDAR
 import docx
 from datetime import datetime, timedelta
 import requests
 from bs4 import BeautifulSoup as bs
+from json import load
+TXST_CALENDAR = None
 
 
 # find class dates between start, end, only on weekdays
@@ -109,6 +110,7 @@ def get_input():
 # scrape TXST academic calendar for holidays between start and end
 def get_TXST_holidays(start, end):
     # get html from TXST website
+    global TXST_CALENDAR
     request = requests.get(TXST_CALENDAR)
     soup = bs(request.content, 'lxml')  # load html using Beautiful Soup
 
@@ -191,10 +193,23 @@ def build_table(table, calendar):
         i += 1
 
 
+def load_config():
+    try:
+        file = open('config.json', 'r')
+        config = load(file)
+        file.close()
+        global TXST_CALENDAR
+        TXST_CALENDAR = config['TXST_CALENDAR']
+    except Exception as e:
+        print("Failed to load config.json")
+        print(e)
+
+
 ##############
 # MAIN TREE ##
 ##############
 if __name__ == "__main__":
+    load_config()
     print("\n#####################\n"
           "# Welcome to Caends #\n"
           "#      version 0.2  #\n"
