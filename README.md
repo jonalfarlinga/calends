@@ -1,8 +1,5 @@
-# calends ver 0.2
-An app for generating semester calendars. When complete, the user will specify
-a location for a holiday list, or use an API to get holidays, and specify weekdays
-for the class to meet. The app will create a .docx containing a table of
-"Mon dd" and "holiday status".
+# calends ver 0.3
+This app generates a .docx format table showing the class meeting dates for a specified time frame and automatically fills in when those dates fall on hoidays. The program is run in the terminal and outputs a document to the user-configured location.
 
 ![Output screenshot](/img/calends_screenshot.png)
 
@@ -10,12 +7,18 @@ for the class to meet. The app will create a .docx containing a table of
 
 1. Download [Python](https://www.python.org/downloads/)
 2. Download the [files](https://github.com/jonalfarlinga/calends) from Github. On the repository page (linked) click the <> Code button, and then Download ZIP.
-
 ![github screenshot](/img/github_screenshot.png)
-
 3. Extract the ZIP wherever you want to save calends.
 4. Double-click to run <code>install.bat</code>. Close the terminal when finished
 5. Double-click to run <code>configure.bat</code>. Press enter twice to use default values and close the terminal when finished.
+><details>
+>    <summary>Default Academic Calendar</summary>
+>    <p>https://www.registrar.txst.edu/registration/ac/academic-calendar.html</p>
+></details>
+><details>
+>   <summary>Default home path</summary>
+>   <p>User home (e.g.) C:\\Users\username\</p>
+></details>
 6. You are ready to go!
 
 ## Running calends

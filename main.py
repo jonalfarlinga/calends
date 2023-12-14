@@ -221,5 +221,5 @@ if __name__ == "__main__":
     document = docx.Document()  # init output doc
     table = document.add_table(rows=1, cols=3)  # convert list to table
     build_table(table, class_dates)
-    document.save("demo.docx")
+    document.save("calends-output.docx")
     print("Printed calendart to 'demo.docx'.\nGoodbye!\n")

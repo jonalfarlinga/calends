@@ -75,3 +75,32 @@
     >>>     holiday['start'] = datetime.strptime(td.find('div', attrs={'class':'event-data'})['data-startdate'], "%Y-%m-%d")
     >>>     holiday['end'] = datetime.strptime(td.find('div', attrs={'class':'event-data'})['data-enddate'], "%Y-%m-%d")
     >>>     holidays.append(holiday)
+
+## 2 Column table
+
+    # take a 7 column Table and a class calendar,
+    # fill in the table with the calendar info.
+    def build_table_2_col(table, calendar):
+        # fill in the header row
+        hdr_cells = table.rows[0].cells
+        hdr_cells[0].text = hdr_cells[4].text = "Date"
+        hdr_cells[1].text = hdr_cells[5].text = "Topics"
+        hdr_cells[2].text = hdr_cells[6].text = "Assignments"
+        # if the number of dates is odd, add a blank entry
+        if len(calendar['dates']) % 2 == 1:
+            calendar['dates'].append('')
+            calendar['topics'].append('')
+            calendar['holidays'].append('')
+
+        # for each entry in half of list, append an entry each from
+        # first and last half, as a new row, to the table.
+        i = 0
+        j = len(calendar['dates']) // 2
+        while i < len(calendar['dates']) // 2:
+            row_cells = table.add_row().cells
+            row_cells[0].text = calendar['dates'][i]
+            row_cells[4].text = calendar['dates'][j]
+            row_cells[2].text = calendar['holidays'][i]
+            row_cells[6].text = calendar['holidays'][j]
+            i += 1
+            j += 1

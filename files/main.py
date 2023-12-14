@@ -1,6 +1,7 @@
 import docx
 from datetime import datetime, timedelta
 import requests
+import os
 from bs4 import BeautifulSoup as bs
 from json import load
 TXST_CALENDAR = None
@@ -147,32 +148,7 @@ def get_TXST_holidays(start, end):
     return holidays
 
 
-# take a 7 column table and a class calendar,
-# fill in the table with the calendar info.
-def build_table_2_col(table, calendar):
-    # fill in the header row
-    hdr_cells = table.rows[0].cells
-    hdr_cells[0].text = hdr_cells[4].text = "Date"
-    hdr_cells[1].text = hdr_cells[5].text = "Topics"
-    hdr_cells[2].text = hdr_cells[6].text = "Assignments"
-    # if the number of dates is odd, add a blank entry
-    if len(calendar['dates']) % 2 == 1:
-        calendar['dates'].append('')
-        calendar['topics'].append('')
-        calendar['holidays'].append('')
 
-    # for each entry in half of list, append an entry each from
-    # first and last half, as a new row, to the table.
-    i = 0
-    j = len(calendar['dates']) // 2
-    while i < len(calendar['dates']) // 2:
-        row_cells = table.add_row().cells
-        row_cells[0].text = calendar['dates'][i]
-        row_cells[4].text = calendar['dates'][j]
-        row_cells[2].text = calendar['holidays'][i]
-        row_cells[6].text = calendar['holidays'][j]
-        i += 1
-        j += 1
 
 
 # take a 3 column table and a class calendar,
@@ -213,10 +189,10 @@ def load_config():
 ##############
 if __name__ == "__main__":
     load_config()
-    print("\n#####################\n"
-          "# Welcome to Caends #\n"
-          "#      version 0.2  #\n"
-          "#####################\n\n")
+    print("\n    ######################\n"
+          "    # Welcome to Calends #\n"
+          "    #      version 0.3   #\n"
+          "    ######################\n\n")
     start, end, weekdays = get_input()  # get inputs
     holidays = get_TXST_holidays(start, end)  # get observed holidays
     class_dates = build_dates(start, end, weekdays, holidays)  # populate list
@@ -225,5 +201,6 @@ if __name__ == "__main__":
     table = document.add_table(rows=1, cols=3)  # convert list to table
     build_table(table, class_dates)
     file_name = 'demo.docx'
-    document.save(file_name)
-    print(f"Printed calendar to {OUT_PATH}\{file_name}\nGoodbye!\n")
+    filepath = os.path.join(OUT_PATH, file_name)
+    document.save(filepath)
+    print(f"Printed calendar to {filepath}\nGoodbye!\n")
