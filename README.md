@@ -1,4 +1,4 @@
-# calends ver 0.35
+# calends ver 0.9
 This app generates a .docx format table showing the class meeting dates for a specified time frame and automatically fills in when those dates fall on hoidays. The program is run in the terminal and outputs a document to the user-configured location.
 
 ![Output screenshot](/img/calends_screenshot.png)
@@ -37,7 +37,7 @@ This app generates a .docx format table showing the class meeting dates for a sp
  - add option for continuous monthly
 
  ### Features Complete
- 
+
  - DONE - Use python-docx to create a table " Date - Topic - Assignment ".
  - SCRATCH - Gather holiday dates from HolidayAPI.
     - Free APIs don't look forward, and don't get spring break

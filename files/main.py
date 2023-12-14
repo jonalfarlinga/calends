@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 from bs4 import BeautifulSoup as bs
 from json import load
+import subprocess
 TXST_CALENDAR = None
 OUT_PATH = None
 
@@ -189,16 +190,24 @@ if __name__ == "__main__":
     load_config()
     print("\n    ######################\n"
           "    # Welcome to Calends #\n"
-          "    #      version 0.35  #\n"
+          "    #      version 0.9   #\n"
           "    ######################\n\n")
+
+    # get table data
     start, end, weekdays = get_input()  # get inputs
     holidays = get_TXST_holidays(start, end)  # get observed holidays
     class_dates = build_dates(start, end, weekdays, holidays)  # populate list
 
+    # create .docx table
     document = docx.Document()  # init output doc
     table = document.add_table(rows=1, cols=3)  # convert list to table
     build_table(table, class_dates)
+
+    # save document to file.
     file_name = 'calends-output.docx'
     filepath = os.path.join(OUT_PATH, file_name)
     document.save(filepath)
+
+    # open explorer to the new file and say goodbye
+    subprocess.Popen(fr'explorer /select,"{str(filepath)}')
     print(f"\nPrinted calendar to {filepath}\nGoodbye!\n")
