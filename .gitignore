@@ -1,6 +1,8 @@
 # project ignores
 keys.py
 *.docx
+config.json
+config.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
