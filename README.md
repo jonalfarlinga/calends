@@ -25,8 +25,126 @@ This app generates a .docx format table showing the class meeting dates for a sp
 
 1. Double-click to run <code>calends.bat</code>.
 2. Answer the questions to create a calendar, paying attention to the required formatting.
-3. After the program is complete, it will tell you the path the new doc was written to. Feel free to edit in your document processor from here!
+<ul>
+  <details>
+    <summary>Show table style formats: Part 1</summary>
+    <ul class="simple">
+        <li>Table Normal</li>
+        <li>Colorful Grid</li>
+        <li>Colorful Grid Accent 1</li>
+        <li>Colorful Grid Accent 2</li>
+        <li>Colorful Grid Accent 3</li>
+        <li>Colorful Grid Accent 4</li>
+        <li>Colorful Grid Accent 5</li>
+        <li>Colorful Grid Accent 6</li>
+        <li>Colorful List</li>
+        <li>Colorful List Accent 1</li>
+        <li>Colorful List Accent 2</li>
+        <li>Colorful List Accent 3</li>
+        <li>Colorful List Accent 4</li>
+        <li>Colorful List Accent 5</li>
+        <li>Colorful List Accent 6</li>
+        <li>Colorful Shading</li>
+        <li>Colorful Shading Accent 1</li>
+        <li>Colorful Shading Accent 2</li>
+        <li>Colorful Shading Accent 3</li>
+        <li>Colorful Shading Accent 4</li>
+        <li>Colorful Shading Accent 5</li>
+        <li>Colorful Shading Accent 6</li>
+        <li>Dark List</li>
+        <li>Dark List Accent 1</li>
+        <li>Dark List Accent 2</li>
+        <li>Dark List Accent 3</li>
+        <li>Dark List Accent 4</li>
+        <li>Dark List Accent 5</li>
+        <li>Dark List Accent 6</li>
+    </ul>
+  </details>
+  <details>
+    <summary>Show table style formats: Part 2</summary>
+    <ul class="simple">
+        <li>Light Grid</li>
+        <li>Light Grid Accent 1</li>
+        <li>Light Grid Accent 2</li>
+        <li>Light Grid Accent 3</li>
+        <li>Light Grid Accent 4</li>
+        <li>Light Grid Accent 5</li>
+        <li>Light Grid Accent 6</li>
+        <li>Light List</li>
+        <li>Light List Accent 1</li>
+        <li>Light List Accent 2</li>
+        <li>Light List Accent 3</li>
+        <li>Light List Accent 4</li>
+        <li>Light List Accent 5</li>
+        <li>Light List Accent 6</li>
+        <li>Light Shading</li>
+        <li>Light Shading Accent 1</li>
+        <li>Light Shading Accent 2</li>
+        <li>Light Shading Accent 3</li>
+        <li>Light Shading Accent 4</li>
+        <li>Light Shading Accent 5</li>
+        <li>Light Shading Accent 6</li>
+        <li>Medium Grid 1</li>
+        <li>Medium Grid 1 Accent 1</li>
+        <li>Medium Grid 1 Accent 2</li>
+        <li>Medium Grid 1 Accent 3</li>
+        <li>Medium Grid 1 Accent 4</li>
+        <li>Medium Grid 1 Accent 5</li>
+        <li>Medium Grid 1 Accent 6</li>
+        <li>Medium Grid 2</li>
+        <li>Medium Grid 2 Accent 1</li>
+        <li>Medium Grid 2 Accent 2</li>
+        <li>Medium Grid 2 Accent 3</li>
+        <li>Medium Grid 2 Accent 4</li>
+        <li>Medium Grid 2 Accent 5</li>
+        <li>Medium Grid 2 Accent 6</li>
+        <li>Medium Grid 3</li>
+        <li>Medium Grid 3 Accent 1</li>
+        <li>Medium Grid 3 Accent 2</li>
+        <li>Medium Grid 3 Accent 3</li>
+        <li>Medium Grid 3 Accent 4</li>
+        <li>Medium Grid 3 Accent 5</li>
+        <li>Medium Grid 3 Accent 6</li>
+    </ul>
+  </details>
+  <details>
+    <summary>Show table style formats: Part 3</summary>
+    <ul class="simple">
+        <li>Medium List 1</li>
+        <li>Medium List 1 Accent 1</li>
+        <li>Medium List 1 Accent 2</li>
+        <li>Medium List 1 Accent 3</li>
+        <li>Medium List 1 Accent 4</li>
+        <li>Medium List 1 Accent 5</li>
+        <li>Medium List 1 Accent 6</li>
+        <li>Medium List 2</li>
+        <li>Medium List 2 Accent 1</li>
+        <li>Medium List 2 Accent 2</li>
+        <li>Medium List 2 Accent 3</li>
+        <li>Medium List 2 Accent 4</li>
+        <li>Medium List 2 Accent 5</li>
+        <li>Medium List 2 Accent 6</li>
+        <li>Medium Shading 1</li>
+        <li>Medium Shading 1 Accent 1</li>
+        <li>Medium Shading 1 Accent 2</li>
+        <li>Medium Shading 1 Accent 3</li>
+        <li>Medium Shading 1 Accent 4</li>
+        <li>Medium Shading 1 Accent 5</li>
+        <li>Medium Shading 1 Accent 6</li>
+        <li>Medium Shading 2</li>
+        <li>Medium Shading 2 Accent 1</li>
+        <li>Medium Shading 2 Accent 2</li>
+        <li>Medium Shading 2 Accent 3</li>
+        <li>Medium Shading 2 Accent 4</li>
+        <li>Medium Shading 2 Accent 5</li>
+        <li>Medium Shading 2 Accent 6</li>
+        <li>Table Grid</li>
+    </ul>
+  </details>
+</ul>
 
+3. After the program is complete, it will tell you the path the new doc and open the containing folder. Feel free to edit in your document processor from here!
+4. <b>IMPORTANT:</b> Each time the program is run, it will overwrite the previoues output. Please copy or rename the file if you want to keep it.
 ![runtime screenshot](/img/runtime_screenshot.png)
 
 ## Dev Roadmap
