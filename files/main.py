@@ -81,6 +81,20 @@ def get_input():
     start = None
     end = None
     format = None
+    style = None
+
+    # ask until I recieve a "" or "1" - output style
+    while not style:
+        style = input("Would you prefer a table output or a continuous "
+                      "monthly calendar?"
+                      "(press Enter for table or 1 for continuous)")
+        if style == "1":
+            style = "continuous"
+        elif style == "":
+            style = "table"
+        else:
+            print("Not a recognized style.")
+            style = None
 
     # ask until I recieve good data - Class days
     while not weekdays:
@@ -109,16 +123,23 @@ def get_input():
             print("Bad Date")
             start = None
 
+    # ask until I recieve something (only runs once) - format option
     while not format:
         format = input("\nWhat format would you like to use?\n"
                        "(press enter to accept no formatting)\n"
                        "(type 1 to use Light Shading format)\n")
+        if format == "1":
+            format = "Light Shading"
     if format == "":
         format = None
-    elif format == "1":
-        format = "Light Shading"
 
-    return start, end, weekdays, format
+    return {
+        "start": start,
+        "end": end,
+        "weekdays": weekdays,
+        "format": format,
+        "style": style
+    }
 
 
 # scrape TXST academic calendar for holidays between start and end
@@ -202,6 +223,15 @@ def load_config():
         print(e)
 
 
+def build_cont_calendar(table, calendar, format):
+    if format:
+        try:
+            table.style = format
+        except KeyError:
+            print(f"There is no '{format}' format. Using default format.")
+
+    day = timedelta.
+
 ##############
 # MAIN TREE ##
 ##############
@@ -214,15 +244,26 @@ if __name__ == "__main__":
           "                   ######################\n\n")
 
     # get table data
-    start, end, weekdays, format = get_input()  # get inputs
-    holidays = get_TXST_holidays(start, end)  # get observed holidays
-    class_dates = build_dates(start, end, weekdays, holidays)  # populate list
+    inputs = get_input()  # get inputs
+    # get observed holidays
+    holidays = get_TXST_holidays(inputs["start"], inputs["end"])
+    class_dates = build_dates(  # populate list
+        inputs["start"],
+        inputs["end"],
+        inputs["weekdays"],
+        inputs["holidays"]
+    )
 
     # create .docx table
     document = docx.Document()  # init output doc
-    table = document.add_table(rows=1, cols=3)  # convert list to table
-    table.autofit = False
-    build_table(table, class_dates, format)
+
+    if inputs["style"] == "continuous":  # convert list to calendar
+        table = document.add_table(rows=1, cols=7)
+        build_cont_calendar(table, class_dates, inputs["format"])
+    else:  # convert list to table
+        table = document.add_table(rows=1, cols=3)
+        table.autofit = False
+        build_table(table, class_dates, inputs["format"])
 
     # save document to file.
     file_name = 'calends-output.docx'
