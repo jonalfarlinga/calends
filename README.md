@@ -1,10 +1,30 @@
-# calends ver 0.11
+# calends ver 0.2
 An app for generating semester calendars. When complete, the user will specify
 a location for a holiday list, or use an API to get holidays, and specify weekdays
 for the class to meet. The app will create a .docx containing a table of
 "Mon dd" and "holiday status".
 
 ![Output screenshot](/img/calends_screenshot.png)
+
+## Installing calends
+
+1. Download [Python](https://www.python.org/downloads/)
+2. Download the [files](https://github.com/jonalfarlinga/calends) from Github. On the repository page (linked) click the <> Code button, and then Download ZIP.
+
+![github screenshot](/img/github_screenshot.png)
+
+3. Extract the ZIP wherever you want to save calends.
+4. Double-click to run <code>install.bat</code>. Close the terminal when finished
+5. Double-click to run <code>configure.bat</code>. Press enter twice to use default values and close the terminal when finished.
+6. You are ready to go!
+
+## Running calends
+
+1. Double-click to run <code>calends.bat</code>.
+2. Answer the questions to create a calendar, paying attention to the required formatting.
+3. After the program is complete, it will tell you the path the new doc was written to. Feel free to edit in your document processor from here!
+
+![runtime screenshot](/img/runtime_screenshot.png)
 
 ## Next Steps
  - DONE - Use python-docx to create a table " Date - Topic - Assignment ".
@@ -15,9 +35,10 @@ for the class to meet. The app will create a .docx containing a table of
  - DONE - Take weekdays and start date from user.
     - DONE - What one-key codes? SMTWRFA
  - DONE - Add holiday logic to build_dates()
- - Add configure .bat to set output path and holiday source
-    - add config.json to load saved info.
- - Add run.bat to launch program.
+ - DONE Add configure .bat to set output path and holiday source
+    - DONE add config.json to load saved info.
+ - DONE Add run.bat to launch program.
  - Create a GUI
  - Format table
  - make an .exe
+ - add option for continuous monthly
