@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup as bs
 from json import load
 TXST_CALENDAR = None
+OUT_PATH = None
 
 
 # find class dates between start, end, only on weekdays
@@ -98,7 +99,7 @@ def get_input():
     # ask until I receive good data - final exam day
     while not end:
         try:
-            end = input("\nWhat is the exam date? MM DD YY\n")
+            end = input("\nWhat is the last day of class? MM DD YY\n")
             end = datetime.strptime(end, "%m %d %y")
         except ValueError:
             print("Bad Date")
@@ -195,11 +196,13 @@ def build_table(table, calendar):
 
 def load_config():
     try:
-        file = open('config.json', 'r')
+        file = open('files/config.json', 'r')
         config = load(file)
         file.close()
         global TXST_CALENDAR
         TXST_CALENDAR = config['TXST_CALENDAR']
+        global OUT_PATH
+        OUT_PATH = config['OUT_PATH']
     except Exception as e:
         print("Failed to load config.json")
         print(e)
@@ -221,5 +224,6 @@ if __name__ == "__main__":
     document = docx.Document()  # init output doc
     table = document.add_table(rows=1, cols=3)  # convert list to table
     build_table(table, class_dates)
-    document.save("demo.docx")
-    print("Printed calendart to 'demo.docx'.\nGoodbye!\n")
+    file_name = 'demo.docx'
+    document.save(file_name)
+    print(f"Printed calendar to {OUT_PATH}\{file_name}\nGoodbye!\n")
