@@ -1,4 +1,4 @@
-# calends ver 0.9
+# calends ver 0.9.1
 This app generates a .docx format table showing the class meeting dates for a specified time frame and automatically fills in when those dates fall on hoidays. The program is run in the terminal and outputs a document to the user-configured location.
 
 ![Output screenshot](/img/calends_screenshot.png)
@@ -11,14 +11,14 @@ This app generates a .docx format table showing the class meeting dates for a sp
 3. Extract the ZIP wherever you want to save calends.
 4. Double-click to run <code>install.bat</code>. Wait up to 30 seconds for it to begin. You may have to approve a security prompt. When finished, close the terminal if it didn't automatically.
 5. Double-click to run <code>configure.bat</code>. Press enter twice to use default values, or enter custom values. When finished, close the terminal if it didn't automatically.
-><details>
->    <summary>Default Academic Calendar</summary>
->    <p>https://www.registrar.txst.edu/registration/ac/academic-calendar.html</p>
-></details>
-><details>
->   <summary>Default home path</summary>
->   <p>User home (e.g. C:\\Users\username\ )</p>
-></details>
+    - <details>
+        <summary>Default Academic Calendar</summary>
+        <p>https://www.registrar.txst.edu/registration/ac/academic-calendar.html</p>
+      </details>
+    - <details>
+        <summary>Default output path</summary>
+        <p>User home (e.g. C:\\Users\username\ )</p>
+      </details>
 6. You are ready to go!
 
 ## Running calends
@@ -150,7 +150,6 @@ This app generates a .docx format table showing the class meeting dates for a sp
 ## Dev Roadmap
 
  - Create a GUI
- - Format table
  - make an .exe
  - add option for continuous monthly
 
@@ -167,3 +166,4 @@ This app generates a .docx format table showing the class meeting dates for a sp
  - DONE Add configure .bat to set output path and holiday source
     - DONE add config.json to load saved info.
  - DONE Add run.bat to launch program.
+ - DONE Format table
