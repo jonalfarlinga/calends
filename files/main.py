@@ -86,8 +86,8 @@ def get_input():
     # ask until I recieve a "" or "1" - output style
     while not style:
         style = input("Would you prefer a table output or a continuous "
-                      "monthly calendar?"
-                      "(press Enter for table or 1 for continuous)")
+                      "monthly calendar?\n"
+                      "(press Enter for table or 1 for continuous)\n")
         if style == "1":
             style = "continuous"
         elif style == "":
@@ -130,7 +130,9 @@ def get_input():
                        "(type 1 to use Light Shading format)\n")
         if format == "1":
             format = "Light Shading"
-    if format == "":
+        elif format == "":
+            format = "None"
+    if format == "None":
         format = None
 
     return {
@@ -223,14 +225,60 @@ def load_config():
         print(e)
 
 
-def build_cont_calendar(table, calendar, format):
+def build_cont_calendar(table, calendar, start, end, format):
+    # GREY = docx.shared.RGBColor(155, 155, 155)
     if format:
         try:
             table.style = format
         except KeyError:
             print(f"There is no '{format}' format. Using default format.")
 
-    day = timedelta.
+    day = timedelta(days=1)
+    week_begin = start
+    week_end = end
+
+    while week_begin.strftime("%a") != "Sun":
+        week_begin -= day
+    while week_end.strftime("%a") != "Sat":
+        week_end += day
+
+    # fill in the header row
+    hdr_cells = table.rows[0].cells
+    hdr_cells[0].text = "Sun"
+    hdr_cells[1].text = "Mon"
+    hdr_cells[2].text = "Tue"
+    hdr_cells[3].text = "Wed"
+    hdr_cells[4].text = "Thu"
+    hdr_cells[5].text = "Fri"
+    hdr_cells[6].text = "Sat"
+
+    cal_day = week_begin
+    print(calendar)
+
+    while cal_day < week_end:
+        # month_accent = int(cal_day.strftime("%m")) % 2
+        row = table.add_row().cells
+        for cell in row:
+            if cal_day.strftime('%d') == "01":
+                cell.text = cal_day.strftime('%B') + " "
+            else:
+                cell.text = ""
+
+            if start.date() <= cal_day.date() <= end.date():
+                cell.text += cal_day.strftime('%d')
+
+                try:
+                    index = calendar["dates"].index(cal_day.strftime('%b %d'))
+                except ValueError:
+                    index = -1
+                if index > 0 and calendar["holidays"][index]:
+                    cell.text += ("\n" + calendar["holidays"][index])
+                elif index > 0:
+                    cell.text += "\nClass Day"
+                else:
+                    cell.text += "\n" + cal_day.strftime('%b %d')
+            cal_day += day
+
 
 ##############
 # MAIN TREE ##
@@ -251,7 +299,7 @@ if __name__ == "__main__":
         inputs["start"],
         inputs["end"],
         inputs["weekdays"],
-        inputs["holidays"]
+        holidays
     )
 
     # create .docx table
@@ -259,7 +307,13 @@ if __name__ == "__main__":
 
     if inputs["style"] == "continuous":  # convert list to calendar
         table = document.add_table(rows=1, cols=7)
-        build_cont_calendar(table, class_dates, inputs["format"])
+        build_cont_calendar(
+            table,
+            class_dates,
+            inputs["start"],
+            inputs["end"],
+            inputs["format"]
+        )
     else:  # convert list to table
         table = document.add_table(rows=1, cols=3)
         table.autofit = False
@@ -275,4 +329,4 @@ if __name__ == "__main__":
         subprocess.Popen(fr'explorer /select,"{str(filepath)}')
         print(f"\nPrinted calendar to {filepath}\nGoodbye!\n")
     except PermissionError:
-        print("Failed to print to {filepath}")
+        print(f"Failed to print to {filepath}")
