@@ -1,4 +1,4 @@
-# calends ver 0.3
+# calends ver 0.35
 This app generates a .docx format table showing the class meeting dates for a specified time frame and automatically fills in when those dates fall on hoidays. The program is run in the terminal and outputs a document to the user-configured location.
 
 ![Output screenshot](/img/calends_screenshot.png)
@@ -10,7 +10,7 @@ This app generates a .docx format table showing the class meeting dates for a sp
 ![github screenshot](/img/github_screenshot.png)
 3. Extract the ZIP wherever you want to save calends.
 4. Double-click to run <code>install.bat</code>. Close the terminal when finished
-5. Double-click to run <code>configure.bat</code>. Press enter twice to use default values and close the terminal when finished.
+5. Double-click to run <code>configure.bat</code>. Press enter twice to use default values, or enter custom values. Close the terminal when finished.
 ><details>
 >    <summary>Default Academic Calendar</summary>
 >    <p>https://www.registrar.txst.edu/registration/ac/academic-calendar.html</p>
