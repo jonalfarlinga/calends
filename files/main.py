@@ -1,11 +1,12 @@
 import docx
 from datetime import datetime, timedelta
-from calendar_fetch import get_TXST_holidays
+from calendar_fetch import get_TXST_holidays, get_SUU_holidays
 import os
 from pathlib import Path
 from json import load
 import subprocess
 OUT_PATH = None
+GETTER = None
 
 
 # find class dates between start, end, only on weekdays
@@ -154,6 +155,8 @@ def load_config():
         file.close()
         global OUT_PATH
         OUT_PATH = Path(config['OUT_PATH'])
+        global GETTER
+        GETTER = config['GETTER']
     except Exception as e:
         print("Failed to load config.json")
         print(e)
@@ -172,7 +175,7 @@ if __name__ == "__main__":
 
     # get table data
     start, end, weekdays, format = get_input()  # get inputs
-    holidays = get_TXST_holidays(start, end)  # get observed holidays
+    holidays = GETTER(start, end)  # get observed holidays
     class_dates = build_dates(start, end, weekdays, holidays)  # populate list
 
     # create .docx table
