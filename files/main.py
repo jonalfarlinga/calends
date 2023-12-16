@@ -1,12 +1,10 @@
 import docx
 from datetime import datetime, timedelta
-import requests
+from calendar_fetch import get_TXST_holidays
 import os
 from pathlib import Path
-from bs4 import BeautifulSoup as bs
 from json import load
 import subprocess
-TXST_CALENDAR = None
 OUT_PATH = None
 
 
@@ -121,45 +119,6 @@ def get_input():
     return start, end, weekdays, format
 
 
-# scrape TXST academic calendar for holidays between start and end
-def get_TXST_holidays(start, end):
-    # get html from TXST website
-    global TXST_CALENDAR
-    request = requests.get(TXST_CALENDAR)
-    soup = bs(request.content, 'lxml')  # load html using Beautiful Soup
-
-    holidays = []
-    for td in soup.findAll('td'):
-        # get all <td> if they contain a <div data-categories="Holidays">
-        if td.find('div', attrs={'data-categories': 'Holidays'}):
-            holiday = {}  # init a dict
-
-            # pull name of holiday
-            holiday['name'] = td.find(
-                'div',
-                attrs={'class': 'event-title'}
-            ).text
-
-            # pull start date
-            holiday['start'] = datetime.strptime(td.find(
-                'div',
-                attrs={'class': 'event-data'}
-            )['data-startdate'], "%Y-%m-%d")
-
-            # pull end date
-            holiday['end'] = datetime.strptime(td.find(
-                'div',
-                attrs={'class': 'event-data'}
-            )['data-enddate'], "%Y-%m-%d")
-
-            # append the details if the dates overlap with class dates
-            if (start <= holiday['start'] <= end or
-               start <= holiday['end'] <= end):
-                holidays.append(holiday)
-
-    return holidays
-
-
 # take a 3 column table and a class calendar,
 # fill in the table with the calendar info.
 def build_table(table, calendar, format):
@@ -193,8 +152,6 @@ def load_config():
         file = open('files/config.json', 'r')
         config = load(file)
         file.close()
-        global TXST_CALENDAR
-        TXST_CALENDAR = config['TXST_CALENDAR']
         global OUT_PATH
         OUT_PATH = Path(config['OUT_PATH'])
     except Exception as e:
@@ -210,7 +167,7 @@ if __name__ == "__main__":
     load_config()
     print("\n                   ######################\n"
           "                   # Welcome to Calends #\n"
-          "                   #      version 0.9   #\n"
+          "                   #      version 0.10  #\n"
           "                   ######################\n\n")
 
     # get table data
