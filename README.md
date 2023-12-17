@@ -1,5 +1,5 @@
-# calends ver 0.10.1
-This app generates a .docx format table showing the class meeting dates for a specified time frame and automatically fills in when those dates fall on hoidays. The program is run in the terminal and outputs a document to the user-configured location.
+# calends ver 1.0
+This app generates a .docx format table showing the class meeting dates for a specified time frame and automatically fills in when those dates fall on hoidays. The program is run in the terminal and outputs a document to the user-configured location. Calends currently supports SUU and TXST Academic Calendars, or the user can supply a .csv file describing the institution's holidays.
 
 ![Output screenshot](/img/calends_screenshot.png)
 
@@ -21,10 +21,17 @@ This app generates a .docx format table showing the class meeting dates for a sp
 
 6. Extract the ZIP wherever you want to save the program.
 7. Double-click to run <code>install.bat</code>. Wait up to 30 seconds for it to begin. You may have to approve a security prompt. When finished, close the terminal if it didn't automatically.
-8. Double-click to run <code>configure.bat</code>. Press enter twice to use default values, or enter custom values. When finished, close the terminal if it didn't automatically.<br>
+8. Double-click to run <code>configure.bat</code>. To use the default values, press enter twice, or enter custom values for your selections. When finished, close the terminal if it didn't automatically.<br>
     - <details>
-        <summary>Default Academic Calendar</summary>
-        <p>https://www.registrar.txst.edu/registration/ac/academic-calendar.html</p>
+        <summary>CSV input intructions</summary>
+        <div>
+        <p>If you choose to use a .csv to supply your institution's holidays, you will need to modify the file called 'holidays.csv' in the 'files' subdirectory.</p>
+        <p>The file should have headers "start", "end", and "name", and include the first and last dates of the holiday in mm/dd/yyyy format, and the name of the holiday.</P>
+        </div>
+      </details>
+    - <details>
+        <summary>Default institution</summary>
+        <p>TXST</p>
       </details>
     - <details>
         <summary>Default output path</summary>
@@ -158,7 +165,7 @@ This app generates a .docx format table showing the class meeting dates for a sp
 
 3. After the program is complete, it will tell you the path the new doc and open the containing folder. Feel free to edit in your document processor from here!
 
-4. <b>IMPORTANT:</b> Each time the program is run, it will overwrite the previoues output. Please copy or rename the file if you want to keep it.<br>
+4. <b>IMPORTANT:</b> Each time the program is run, it will overwrite the previous output. Please copy or rename the file if you want to keep it.<br>
 ![runtime screenshot](/img/runtime_screenshot.png)
 
 ## Dev Roadmap

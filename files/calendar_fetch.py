@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup as bs
 from datetime import datetime
 import re
+import csv
 
 
 # scrape TXST academic calendar for holidays between start and end
@@ -56,23 +57,6 @@ def get_SUU_holidays(start, end):
     soup_summ = bs(req_summ.content, 'lxml')
     soup_sprg = bs(req_sprg.content, 'lxml')
 
-    '''
-        <tr>
-    <td>
-    Tuesday, March 26
-    </td>
-    <td>
-    <span class="label label-success">
-    Festival of Excellence (Campus Open)
-    </span>
-    </td>
-    <td>
-    <span class="label label-inverse">
-    No classes
-    </span>
-    </td>
-    </tr>
-    '''
     holidays = []
     for soup in [soup_fall, soup_summ, soup_sprg]:
         headline = soup.find('h1').text
@@ -112,5 +96,27 @@ def get_SUU_holidays(start, end):
                 if (start <= holiday['start'] <= end or
                    start <= holiday['end'] <= end):
                     holidays.append(holiday)
+
+    return holidays
+
+
+def get_CSV_holidays(start, end):
+    with open('files/holidays.csv', 'r', encoding="utf_8_sig") as file:
+        csv_reader = csv.DictReader(file)
+        data = [row for row in csv_reader]
+        file.close()
+    holidays = []
+    for holiday in data:
+        holiday['start'] = datetime.strptime(holiday['start'], "%m/%d/%Y")
+        holiday['end'] = datetime.strptime(holiday['end'], "%m/%d/%Y")
+        # append the details if the dates overlap with class dates
+        if (start <= holiday["start"] <= end or
+           start <= holiday['end'] <= end):
+            holiday = {
+                "name": holiday['name'],
+                "start": holiday['start'],
+                "end": holiday['end']
+            }
+            holidays.append(holiday)
 
     return holidays

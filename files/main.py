@@ -1,6 +1,8 @@
 import docx
 from datetime import datetime, timedelta
-from calendar_fetch import get_TXST_holidays, get_SUU_holidays
+from calendar_fetch import (
+    get_TXST_holidays, get_SUU_holidays, get_CSV_holidays
+)
 import os
 from pathlib import Path
 from json import load
@@ -156,9 +158,20 @@ def load_config():
         global OUT_PATH
         OUT_PATH = Path(config['OUT_PATH'])
         global GETTER
-        GETTER = config['GETTER']
+        if config['INST'] == "SUU":
+            GETTER = get_SUU_holidays
+        elif config["INST"] == "TXST":
+            GETTER = get_TXST_holidays
+        elif config["INST"] == "CSV":
+            GETTER = get_CSV_holidays
+        else:
+            print("Unknown Institution key in config.json. Run configure.bat "
+                  "to repair.")
+            raise KeyError
+
     except Exception as e:
-        print("Failed to load config.json")
+        print("Failed to load config.json. If this error persists, run "
+              "configure.bat to repair.")
         print(e)
 
 

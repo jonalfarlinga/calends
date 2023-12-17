@@ -5,15 +5,23 @@ from json import dumps
 
 def get_input():
     OUT_PATH = None
-    TXST_CALENDAR = None
+    INST = None
 
-    while not TXST_CALENDAR:
-        TXST_CALENDAR = input("\nEnter URL for TXST Academic Calendar \n"
-                              "(press Enter to use default: "
-                              "https://www.registrar.txst.edu/registration/ac/academic-calendar.html)\n"  # noqa:E501
-                              )
-        if TXST_CALENDAR == "":
-            TXST_CALENDAR = "https://www.registrar.txst.edu/registration/ac/academic-calendar.html"  # noqa:E501
+    while not INST:
+        INST = input("\nSelect institution. \n"
+                     "(press Enter to use default: TXST)\n"
+                     "(type SUU for Southern Utah University) \n"
+                     "(tpye CSV to import from a holidays.csv file) \n"
+                     )
+        if INST == "":
+            INST = "TXST"
+        elif INST == "SUU":
+            pass
+        elif INST == "CSV":
+            pass
+        else:
+            print("Not a supported institution.")
+            INST = None
 
     while not OUT_PATH:
         home = os.environ["HOMEDRIVE"] + os.environ['HOMEPATH']
@@ -36,7 +44,7 @@ def get_input():
                 print(e)
                 OUT_PATH = None
     config = {
-        "TXST_CALENDAR": TXST_CALENDAR,
+        "INST": INST,
         "OUT_PATH": str(OUT_PATH)
     }
     return config
