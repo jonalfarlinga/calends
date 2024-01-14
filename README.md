@@ -177,7 +177,7 @@ This app generates a .docx format table showing the class meeting dates for a sp
  ### Features Complete
 
  - DONE - Use python-docx to create a table " Date - Topic - Assignment ".
- - SCRATCH - Gather holiday dates from HolidayAPI.
+ - ~~Gather holiday dates from HolidayAPI.~~
     - Free APIs don't look forward, and don't get spring break
  - DONE - Gather holidays from user source.
     - DONE - What source(s) TX State Registration - Academic Calendar
